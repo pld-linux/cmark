@@ -7,7 +7,7 @@ Name:		cmark
 Version:	0.28.3
 Release:	1
 License:	BSD and MIT
-Group:		Libraries
+Group:		Applications/Text
 Source0:	https://github.com/CommonMark/cmark/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	324440a52a131ac24f2710b073865b7c
 URL:		https://github.com/CommonMark/cmark
