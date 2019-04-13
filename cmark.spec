@@ -4,12 +4,12 @@
 #
 Summary:	CommonMark parsing and rendering program
 Name:		cmark
-Version:	0.28.3
+Version:	0.29.0
 Release:	1
 License:	BSD and MIT
 Group:		Applications/Text
 Source0:	https://github.com/CommonMark/cmark/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	324440a52a131ac24f2710b073865b7c
+# Source0-md5:	3bde2e450f46d3eb1494e2e6e8305d65
 URL:		https://github.com/CommonMark/cmark
 BuildRequires:	cmake
 Requires:	%{name}-lib = %{version}-%{release}
