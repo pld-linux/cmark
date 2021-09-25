@@ -1,17 +1,19 @@
 #
 # Conditional build:
-%bcond_without	static_libs	# don't build static libraries
+%bcond_without	static_libs	# static library
 #
 Summary:	CommonMark parsing and rendering program
+Summary(pl.UTF-8):	Program do analizy i renderowania formatowania CommonMark
 Name:		cmark
-Version:	0.29.0
+Version:	0.30.2
 Release:	1
 License:	BSD and MIT
 Group:		Applications/Text
+#Source0Download: https://github.com/CommonMark/cmark/releases
 Source0:	https://github.com/CommonMark/cmark/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	3bde2e450f46d3eb1494e2e6e8305d65
+# Source0-md5:	d3f527fe8451dd9b58974b52c27302a8
 URL:		https://github.com/CommonMark/cmark
-BuildRequires:	cmake
+BuildRequires:	cmake >= 3.7
 Requires:	%{name}-lib = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -19,13 +21,22 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Cmark is the C reference implementation of CommonMark, a rationalized
 version of Markdown syntax with a spec.
 
+%description -l pl.UTF-8
+CMark to wzorcowa implementacja w C formatu CommonMark -
+zracjonalizowanej wersji składni Markdown, posiadającej specyfikację.
+
 %package lib
 Summary:	CommonMark parsing and rendering library
+Summary(pl.UTF-8):	Biblioteka do analizy i renderowania formatowania CommonMark
 Group:		Libraries
 
 %description lib
 Cmark is the C reference implementation of CommonMark, a rationalized
 version of Markdown syntax with a spec.
+
+%description lib -l pl.UTF-8
+CMark to wzorcowa implementacja w C formatu CommonMark -
+zracjonalizowanej wersji składni Markdown, posiadającej specyfikację.
 
 %package devel
 Summary:	Header files for %{name} library
@@ -57,8 +68,8 @@ Statyczna biblioteka %{name}.
 %build
 mkdir build
 cd build
-%{cmake} \
-	../
+%cmake .. \
+	%{!?with_static_libs:-DCMARK_STATIC=OFF}
 
 %{__make}
 
@@ -81,16 +92,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files lib
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libcmark.so.*.*.*
+%doc COPYING README.md changelog.txt
+%attr(755,root,root) %{_libdir}/libcmark.so.%{version}
 
 %files devel
 %defattr(644,root,root,755)
-%doc README.md changelog.txt
 %attr(755,root,root) %{_libdir}/libcmark.so
 %{_includedir}/cmark*.h
 %{_pkgconfigdir}/libcmark.pc
-%{_libdir}/cmake/cmark-pld.cmake
-%{_libdir}/cmake/cmark.cmake
+%{_libdir}/cmake/cmark
 %{_mandir}/man3/cmark.3*
 
 %if %{with static_libs}
