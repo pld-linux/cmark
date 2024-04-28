@@ -5,13 +5,13 @@
 Summary:	CommonMark parsing and rendering program
 Summary(pl.UTF-8):	Program do analizy i renderowania formatowania CommonMark
 Name:		cmark
-Version:	0.30.3
+Version:	0.31.0
 Release:	1
 License:	BSD and MIT
 Group:		Applications/Text
 #Source0Download: https://github.com/CommonMark/cmark/releases
 Source0:	https://github.com/CommonMark/cmark/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	b99102dd8f3e9af42940efe79c2e973e
+# Source0-md5:	0f18ad50f77cc20e048316857f187da2
 URL:		https://github.com/CommonMark/cmark
 BuildRequires:	cmake >= 3.7
 Requires:	%{name}-lib = %{version}-%{release}
@@ -66,15 +66,32 @@ Statyczna biblioteka %{name}.
 %setup -q
 
 %build
-mkdir build
-cd build
+%if %{with static_libs}
+install -d build-static
+cd build-static
 %cmake .. \
-	%{!?with_static_libs:-DCMARK_STATIC=OFF}
+	-DBUILD_SHARED_LIBS=OFF
+
+%{__make}
+cd ..
+%endif
+
+install -d build
+cd build
+%cmake ..
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+%if %{with static_libs}
+%{__make} -C build-static install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+# ensure executable comes from shared build
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/cmark
+%endif
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
