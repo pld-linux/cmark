@@ -5,13 +5,13 @@
 Summary:	CommonMark parsing and rendering program
 Summary(pl.UTF-8):	Program do analizy i renderowania formatowania CommonMark
 Name:		cmark
-Version:	0.31.0
+Version:	0.31.1
 Release:	1
 License:	BSD and MIT
 Group:		Applications/Text
 #Source0Download: https://github.com/CommonMark/cmark/releases
 Source0:	https://github.com/CommonMark/cmark/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	0f18ad50f77cc20e048316857f187da2
+# Source0-md5:	362160f1c0457389f5ad6e9d5eaf4cfb
 URL:		https://github.com/CommonMark/cmark
 BuildRequires:	cmake >= 3.7
 Requires:	%{name}-lib = %{version}-%{release}
